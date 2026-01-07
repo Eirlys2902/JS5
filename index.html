@@ -280,6 +280,11 @@
             var v_t = parseInt(i_t.value);
             var v_p = parseInt(i_p.value);
 
+            if (v_t > 10000) {
+                v_t = 10000;
+                i_t.value = 10000;
+            }
+
             if (v_t >= 0 && v_t <= v_p - gap) {
                 s_t.value = v_t;
                 draw();
@@ -293,7 +298,12 @@
             var v_t = parseInt(i_t.value);
             var v_p = parseInt(i_p.value);
 
-            if (v_p <= 10000 && v_p >= v_t + gap) {
+            if (v_p > 10000) {
+                v_p = 10000;
+                i_p.value = 10000;
+            }
+
+            if (v_p >= v_t + gap) {
                 s_p.value = v_p;
                 draw();
             }
