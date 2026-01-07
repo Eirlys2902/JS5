@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS5</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sz: 24px;
+            --bg: #fff;
+            --bd: 4px solid #a1c4fd;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #4a4a4a;
+        }
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            padding: 50px 40px;
+            border-radius: 24px;
+            box-shadow: 0 12px 30px rgba(173, 216, 230, 0.5);
+            text-align: center;
+            border: 1px solid #e6f2ff;
+            h2 {
+                font-size: 22px;
+                font-weight: bold;
+                margin-bottom: 30px;
+                color: #6c91c2;
+            }
+            .wrap {
+                position: relative;
+                height: 50px;
+                margin-bottom: 30px;
+                padding: 0 10px;
+                .container {
+                    position: relative;
+                    width: 100%;
+                    height: 8px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    .bg {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        background-color: #e1e9f0;
+                        border-radius: 99px;
+                    }
+                    .fill {
+                        position: absolute;
+                        height: 100%;
+                        background: linear-gradient(90deg, #a1c4fd, #c2e9fb);
+                        border-radius: 99px;
+                        z-index: 1;
+                    }
+                }
+                .labels {
+                    position: absolute;
+                    width: 100%;
+                    top: 45px;
+                    left: 0;
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 13px;
+                    color: #9ca3af;
+                    font-weight: 600;
+                    pointer-events: none;
+                }
+
+                .input {
+                    position: absolute;
+                    width: 100%;
+                    height: 8px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    left: 0;
+                    background: none;
+                    pointer-events: none;
+                    appearance: none;
+                    z-index: 2;
+                    &::slider-thumb {
+                        appearance: none;
+                        height: var(--sz);
+                        width: var(--sz);
+                        border-radius: 50%;
+                        background: var(--bg);
+                        border: var(--bd);
+                        cursor: pointer;
+                        pointer-events: auto;
+                        box-shadow: 0 2px 6px rgba(161, 196, 253, 0.4);
+                    }
+
+                    &::-moz-range-thumb {
+                        height: var(--sz);
+                        width: var(--sz);
+                        border-radius: 50%;
+                        background: var(--bg);
+                        border: var(--bd);
+                        cursor: pointer;
+                        pointer-events: auto;
+                        box-shadow: 0 2px 6px rgba(161, 196, 253, 0.4);
+                        box-sizing: border-box;
+                    }
+                }
+                .tool {
+                    position: absolute;
+                    top: -35px;
+                    transform: translateX(-50%);
+                    background-color: #6c91c2;
+                    color: white;
+                    font-size: 12px;
+                    padding: 4px 10px;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    pointer-events: none;
+                    white-space: nowrap;
+                    &::after {
+                        position: absolute;
+                        bottom: -4px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        border-left: 5px solid transparent;
+                        border-right: 5px solid transparent;
+                        border-top: 5px solid #6c91c2;
+                    }
+                }
+            }
+            .inputs-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 20px;
+                .input-box {
+                    background: #ffffff;
+                    border: 2px solid #dae1e7;
+                    border-radius: 12px;
+                    padding: 5px 15px;
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    &.active {
+                        border-color: #a1c4fd;
+                        background: #fff;
+                    }
+                    .do {
+                        color: #aaa;
+                        font-weight: bold;
+                        margin-right: 5px;
+                        font-size: 14px;
+                    }
+                    .num {
+                        width: 100%;
+                        border: none;
+                        background: transparent;
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: #555;
+                        outline: none;
+                        text-align: right;
+                        padding: 10px 0;
+                        padding-right: 5px; 
+                    }
+                }
+                .g {
+                    font-weight: bold;
+                    color: #dae1e7;
+                    font-size: 20px;
+                }
+            }
+        }
+        input[type=number]::inner-spin-button {
+            opacity: 1;
+            cursor: pointer;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>KHOẢNG GIÁ</h2>
+        <div class="wrap">
+            <div class="container">
+                <div class="bg"></div>
+                <div class="fill" id="fill"></div>
+            </div>
+            <div class="labels">
+                <span>0</span><span>10000</span>
+            </div>
+            
+            <input type="range" class="input s" id="s-t" min="0" max="10000" value="2500">
+            <input type="range" class="input s" id="s-p" min="0" max="10000" value="7500">
+
+            <div class="tool t" id="t-t">2500</div>
+            <div class="tool t" id="t-p">7500</div>
+        </div>
+
+        <div class="inputs-container">
+            <div class="input-box">
+                <span class="do">$</span>
+                <input type="number" class="num i" id="i-t" value="2500" min="0" max="10000">
+            </div>
+            <div class="g">—</div>
+            <div class="input-box">
+                <span class="do">$</span>
+                <input type="number" class="num i" id="i-p" value="7500" min="0" max="10000">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var s_t = document.getElementById("s-t");
+        var s_p = document.getElementById("s-p");
+        
+        var i_t = document.getElementById("i-t");
+        var i_p = document.getElementById("i-p");
+        
+        var tool_t = document.getElementById("t-t");
+        var tool_p = document.getElementById("t-p");
+        
+        var fill = document.getElementById("fill");
+        var gap = 0;
+
+        function draw() {
+            var v_t = parseInt(s_t.value);
+            var v_p = parseInt(s_p.value);
+            var max = 10000;
+
+            var p_t = (v_t / max) * 100;
+            var p_p = (v_p / max) * 100;
+
+            fill.style.left = p_t + "%";
+            fill.style.width = (p_p - p_t) + "%";
+            
+            tool_t.innerText = v_t; 
+            tool_t.style.left = p_t + "%";
+            
+            tool_p.innerText = v_p; 
+            tool_p.style.left = p_p + "%";
+        }
+
+        s_t.addEventListener("input", function() {
+            var v_t = parseInt(s_t.value);
+            var v_p = parseInt(s_p.value);
+
+            if (v_t > v_p - gap) {
+                s_t.value = v_p - gap;
+            }
+            
+            i_t.value = s_t.value;
+            draw();
+        });
+
+        s_p.addEventListener("input", function() {
+            var v_t = parseInt(s_t.value);
+            var v_p = parseInt(s_p.value);
+
+            if (v_p < v_t + gap) {
+                s_p.value = v_t + gap;
+            }
+
+            i_p.value = s_p.value;
+            draw();
+        });
+
+        i_t.addEventListener("input", function() {
+            var v_t = parseInt(i_t.value);
+            var v_p = parseInt(i_p.value);
+
+            if (v_t >= 0 && v_t <= v_p - gap) {
+                s_t.value = v_t;
+                draw();
+            }
+        });
+
+        i_t.addEventListener("focus", function() { this.parentElement.classList.add("active"); });
+        i_t.addEventListener("blur", function() { this.parentElement.classList.remove("active"); });
+
+        i_p.addEventListener("input", function() {
+            var v_t = parseInt(i_t.value);
+            var v_p = parseInt(i_p.value);
+
+            if (v_p <= 10000 && v_p >= v_t + gap) {
+                s_p.value = v_p;
+                draw();
+            }
+        });
+
+        i_p.addEventListener("focus", function() { this.parentElement.classList.add("active"); });
+        i_p.addEventListener("blur", function() { this.parentElement.classList.remove("active"); });
+
+        draw();
+    </script>
+</body>
+</html>
+
