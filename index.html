@@ -256,8 +256,8 @@
             var v_t = parseInt(s_t.value);
             var v_p = parseInt(s_p.value);
 
-            if (v_t > v_p - gap) {
-                s_t.value = v_p - gap;
+            if (v_t > v_p) {
+                s_t.value = v_p;
             }
             
             i_t.value = s_t.value;
@@ -268,8 +268,8 @@
             var v_t = parseInt(s_t.value);
             var v_p = parseInt(s_p.value);
 
-            if (v_p < v_t + gap) {
-                s_p.value = v_t + gap;
+            if (v_p < v_t) {
+                s_p.value = v_t;
             }
 
             i_p.value = s_p.value;
@@ -280,15 +280,17 @@
             var v_t = parseInt(i_t.value);
             var v_p = parseInt(i_p.value);
 
-            if (v_t > 10000) {
-                v_t = 10000;
-                i_t.value = 10000;
+            if (v_t < 0) v_t = 0;
+            if (v_t > 10000) v_t = 10000;
+            if (isNaN(v_t)) v_t = 0;
+
+            if (v_t > v_p) {
+                v_t = v_p;
             }
 
-            if (v_t >= 0 && v_t <= v_p - gap) {
-                s_t.value = v_t;
-                draw();
-            }
+            i_t.value = v_t; 
+            s_t.value = v_t;
+            draw();
         });
 
         i_t.addEventListener("focus", function() { this.parentElement.classList.add("active"); });
@@ -298,15 +300,17 @@
             var v_t = parseInt(i_t.value);
             var v_p = parseInt(i_p.value);
 
-            if (v_p > 10000) {
-                v_p = 10000;
-                i_p.value = 10000;
+            if (v_p < 0) v_p = 0;
+            if (v_p > 10000) v_p = 10000;
+            if (isNaN(v_p)) v_p = 10000;
+
+            if (v_p < v_t) {
+                v_p = v_t;
             }
 
-            if (v_p >= v_t + gap) {
-                s_p.value = v_p;
-                draw();
-            }
+            i_p.value = v_p;
+            s_p.value = v_p;
+            draw();
         });
 
         i_p.addEventListener("focus", function() { this.parentElement.classList.add("active"); });
