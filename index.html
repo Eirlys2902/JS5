@@ -6,12 +6,13 @@
     <title>JS5</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --sz: 24px;
             --bg: #fff;
             --bd: 4px solid #a1c4fd;
+            --track-h: 8px;
         }
         * {
             box-sizing: border-box;
@@ -26,6 +27,7 @@
             align-items: center;
             min-height: 100vh;
             color: #4a4a4a;
+            padding: 20px;
         }
         .card {
             background: white;
@@ -36,23 +38,28 @@
             box-shadow: 0 12px 30px rgba(173, 216, 230, 0.5);
             text-align: center;
             border: 1px solid #e6f2ff;
+            transition: padding 0.3s;
+
             h2 {
                 font-size: 22px;
                 font-weight: bold;
-                margin-bottom: 30px;
+                margin-bottom: 40px;
                 color: #6c91c2;
+                letter-spacing: 1px;
             }
+
             .wrap {
                 position: relative;
-                height: 50px;
+                height: 40px;
                 margin-bottom: 30px;
-                padding: 0 10px;
+
                 .container {
                     position: relative;
                     width: 100%;
-                    height: 8px;
+                    height: var(--track-h);
                     top: 50%;
                     transform: translateY(-50%);
+
                     .bg {
                         position: absolute;
                         width: 100%;
@@ -63,37 +70,59 @@
                     .fill {
                         position: absolute;
                         height: 100%;
-                        background: linear-gradient(90deg, #a1c4fd, #c2e9fb);
+                        background: linear-gradient(90deg, #a1c4fd, #6c91c2);
                         border-radius: 99px;
                         z-index: 1;
                     }
                 }
-                .labels {
+
+                .tool {
                     position: absolute;
-                    width: 100%;
-                    top: 45px;
-                    left: 0;
-                    display: flex;
-                    justify-content: space-between;
-                    font-size: 13px;
-                    color: #9ca3af;
-                    font-weight: 600;
+                    top: -35px;
+                    transform: translateX(-50%);
+                    background-color: #6c91c2;
+                    color: white;
+                    font-size: 12px;
+                    padding: 4px 10px;
+                    border-radius: 8px;
+                    font-weight: bold;
                     pointer-events: none;
+                    white-space: nowrap;
+                    opacity: 0;
+                    transition: opacity 0.2s;
+
+                    &.show {
+                        opacity: 1;
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -4px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        border-left: 5px solid transparent;
+                        border-right: 5px solid transparent;
+                        border-top: 5px solid #6c91c2;
+                    }
                 }
 
-                .input {
+                input[type="range"] {
+                    -webkit-appearance: none;
+                    appearance: none;
                     position: absolute;
                     width: 100%;
-                    height: 8px;
+                    height: var(--track-h);
                     top: 50%;
                     transform: translateY(-50%);
                     left: 0;
                     background: none;
                     pointer-events: none;
-                    appearance: none;
                     z-index: 2;
-                    &::slider-thumb {
-                        appearance: none;
+                    margin: 0;
+
+                    &::-webkit-slider-thumb {
+                        -webkit-appearance: none;
                         height: var(--sz);
                         width: var(--sz);
                         border-radius: 50%;
@@ -102,6 +131,7 @@
                         cursor: pointer;
                         pointer-events: auto;
                         box-shadow: 0 2px 6px rgba(161, 196, 253, 0.4);
+                        margin-top: 0;
                     }
 
                     &::-moz-range-thumb {
@@ -116,34 +146,15 @@
                         box-sizing: border-box;
                     }
                 }
-                .tool {
-                    position: absolute;
-                    top: -35px;
-                    transform: translateX(-50%);
-                    background-color: #6c91c2;
-                    color: white;
-                    font-size: 12px;
-                    padding: 4px 10px;
-                    border-radius: 8px;
-                    font-weight: bold;
-                    pointer-events: none;
-                    white-space: nowrap;
-                    &::after {
-                        position: absolute;
-                        bottom: -4px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        border-left: 5px solid transparent;
-                        border-right: 5px solid transparent;
-                        border-top: 5px solid #6c91c2;
-                    }
-                }
             }
+
             .inputs-container {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 gap: 20px;
+                margin-top: 20px;
+
                 .input-box {
                     background: #ffffff;
                     border: 2px solid #dae1e7;
@@ -152,16 +163,19 @@
                     display: flex;
                     align-items: center;
                     width: 100%;
-                    &.active {
+                    transition: border-color 0.2s;
+
+                    &:focus-within {
                         border-color: #a1c4fd;
-                        background: #fff;
                     }
+
                     .do {
                         color: #aaa;
                         font-weight: bold;
                         margin-right: 5px;
                         font-size: 14px;
                     }
+
                     .num {
                         width: 100%;
                         border: none;
@@ -172,9 +186,10 @@
                         outline: none;
                         text-align: right;
                         padding: 10px 0;
-                        padding-right: 5px; 
+                        font-family: 'Nunito', sans-serif;
                     }
                 }
+
                 .g {
                     font-weight: bold;
                     color: #dae1e7;
@@ -182,10 +197,49 @@
                 }
             }
         }
+        
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
-            opacity: 1;
-            cursor: pointer;
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 20px;
+                border-radius: 16px;
+
+                h2 {
+                    font-size: 18px;
+                    margin-bottom: 30px;
+                }
+                
+                .wrap {
+                    margin-bottom: 20px;
+                }
+
+                .inputs-container {
+                    gap: 10px;
+
+                    .input-box {
+                        padding: 4px 10px;
+
+                        .num {
+                            font-size: 14px;
+                            padding: 8px 0;
+                        }
+                        .do {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+            :root {
+                --sz: 20px;
+            }
         }
     </style>
 </head>
@@ -197,127 +251,125 @@
                 <div class="bg"></div>
                 <div class="fill" id="fill"></div>
             </div>
-            <div class="labels">
-                <span>0</span><span>10000</span>
-            </div>
             
-            <input type="range" class="input s" id="s-t" min="0" max="10000" value="2500">
-            <input type="range" class="input s" id="s-p" min="0" max="10000" value="7500">
+            <div class="tool" id="t-t">2500</div>
+            <div class="tool" id="t-p">7500</div>
 
-            <div class="tool t" id="t-t">2500</div>
-            <div class="tool t" id="t-p">7500</div>
+            <input type="range" id="s-t" min="0" max="10000" value="2500" step="10">
+            <input type="range" id="s-p" min="0" max="10000" value="7500" step="10">
         </div>
 
         <div class="inputs-container">
             <div class="input-box">
                 <span class="do">$</span>
-                <input type="number" class="num i" id="i-t" value="2500" min="0" max="10000">
+                <input type="number" class="num" id="i-t" value="2500" min="0" max="10000">
             </div>
             <div class="g">—</div>
             <div class="input-box">
                 <span class="do">$</span>
-                <input type="number" class="num i" id="i-p" value="7500" min="0" max="10000">
+                <input type="number" class="num" id="i-p" value="7500" min="0" max="10000">
             </div>
         </div>
     </div>
 
     <script>
-        var s_t = document.getElementById("s-t");
-        var s_p = document.getElementById("s-p");
+        const s_t = document.getElementById("s-t");
+        const s_p = document.getElementById("s-p");
+        const i_t = document.getElementById("i-t");
+        const i_p = document.getElementById("i-p");
+        const tool_t = document.getElementById("t-t");
+        const tool_p = document.getElementById("t-p");
+        const fill = document.getElementById("fill");
         
-        var i_t = document.getElementById("i-t");
-        var i_p = document.getElementById("i-p");
-        
-        var tool_t = document.getElementById("t-t");
-        var tool_p = document.getElementById("t-p");
-        
-        var fill = document.getElementById("fill");
-        var gap = 0;
+        const MAX = 10000;
+        const MIN_GAP = 1;
 
         function draw() {
-            var v_t = parseInt(s_t.value);
-            var v_p = parseInt(s_p.value);
-            var max = 10000;
+            let v_t = parseInt(s_t.value);
+            let v_p = parseInt(s_p.value);
 
-            var p_t = (v_t / max) * 100;
-            var p_p = (v_p / max) * 100;
+            if (v_p - v_t < MIN_GAP) {
+                if (document.activeElement === s_t) {
+                    s_t.value = v_p - MIN_GAP;
+                    v_t = parseInt(s_t.value);
+                } else {
+                    s_p.value = v_t + MIN_GAP;
+                    v_p = parseInt(s_p.value);
+                }
+            }
+
+            if (document.activeElement !== i_t) {
+                i_t.value = v_t;
+            }
+            if (document.activeElement !== i_p) {
+                i_p.value = v_p;
+            }
+
+            const p_t = (v_t / MAX) * 100;
+            const p_p = (v_p / MAX) * 100;
 
             fill.style.left = p_t + "%";
             fill.style.width = (p_p - p_t) + "%";
-            
-            tool_t.innerText = v_t; 
+
+            tool_t.innerText = v_t;
             tool_t.style.left = p_t + "%";
             
-            tool_p.innerText = v_p; 
+            tool_p.innerText = v_p;
             tool_p.style.left = p_p + "%";
+
+            tool_t.classList.add("show");
+            tool_p.classList.add("show");
         }
 
-        s_t.addEventListener("input", function() {
-            var v_t = parseInt(s_t.value);
-            var v_p = parseInt(s_p.value);
-
-            if (v_t > v_p) {
-                s_t.value = v_p;
-            }
-            
-            i_t.value = s_t.value;
-            draw();
-        });
-
-        s_p.addEventListener("input", function() {
-            var v_t = parseInt(s_t.value);
-            var v_p = parseInt(s_p.value);
-
-            if (v_p < v_t) {
-                s_p.value = v_t;
-            }
-
-            i_p.value = s_p.value;
-            draw();
-        });
+        s_t.addEventListener("input", draw);
+        s_p.addEventListener("input", draw);
 
         i_t.addEventListener("input", function() {
-            var v_t = parseInt(i_t.value);
-            var v_p = parseInt(i_p.value);
-
-            if (v_t < 0) v_t = 0;
-            if (v_t > 10000) v_t = 10000;
-            if (isNaN(v_t)) v_t = 0;
-
-            if (v_t > v_p) {
-                v_t = v_p;
-            }
-
-            i_t.value = v_t; 
-            s_t.value = v_t;
+            let val = parseInt(this.value);
+            if (isNaN(val)) return;
+            
+            if (val < 0) { val = 0; }
+            if (val >= parseInt(s_p.value) - MIN_GAP) val = parseInt(s_p.value) - MIN_GAP;
+            
+            s_t.value = val;
             draw();
         });
 
-        i_t.addEventListener("focus", function() { this.parentElement.classList.add("active"); });
-        i_t.addEventListener("blur", function() { this.parentElement.classList.remove("active"); });
+        i_t.addEventListener("change", function() {
+            let val = parseInt(this.value);
+            if (isNaN(val)) val = 0;
+            if (val < 0) val = 0;
+            
+            this.value = s_t.value; 
+        });
 
         i_p.addEventListener("input", function() {
-            var v_t = parseInt(i_t.value);
-            var v_p = parseInt(i_p.value);
+            let val = parseInt(this.value);
+            if (isNaN(val)) return;
 
-            if (v_p < 0) v_p = 0;
-            if (v_p > 10000) v_p = 10000;
-            if (isNaN(v_p)) v_p = 10000;
-
-            if (v_p < v_t) {
-                v_p = v_t;
-            }
-
-            i_p.value = v_p;
-            s_p.value = v_p;
+            if (val > MAX) { val = MAX; }
+            if (val <= parseInt(s_t.value) + MIN_GAP) val = parseInt(s_t.value) + MIN_GAP;
+            
+            s_p.value = val;
             draw();
         });
 
-        i_p.addEventListener("focus", function() { this.parentElement.classList.add("active"); });
-        i_p.addEventListener("blur", function() { this.parentElement.classList.remove("active"); });
+        i_p.addEventListener("change", function() {
+            let val = parseInt(this.value);
+            if (isNaN(val)) val = MAX;
+            if (val > MAX) val = MAX;
+            
+            this.value = s_p.value;
+        });
+
+        s_t.addEventListener("mouseenter", function() {
+            this.style.zIndex = "3";
+        });
+        s_t.addEventListener("mouseleave", function() {
+            this.style.zIndex = "2";
+        });
 
         draw();
     </script>
 </body>
 </html>
-
